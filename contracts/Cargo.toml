@@ -1,0 +1,7 @@
+[workspace]
+members = [
+    "retirement_verifier",
+    "nullifier_registry",
+    "credit_registry",
+]
+resolver = "2"
