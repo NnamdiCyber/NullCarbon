@@ -1,0 +1,28 @@
+plan.md
+
+# Node
+node_modules/
+dist/
+.cache/
+
+# Rust
+target/
+
+# Noir
+circuits/target/
+
+# Environment
+.env
+.env.local
+backend/.env
+frontend/src/environments/environment.ts
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
