@@ -1,0 +1,152 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  CARGO_TERM_COLOR: always
+  NODE_VERSION: '20'
+
+jobs:
+  circuits:
+    name: Circuits (Noir)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Noir toolchain
+        run: |
+          curl -L https://raw.githubusercontent.com/noir-lang/noirup/main/install | bash
+          export PATH="$HOME/.nargo/bin:$PATH"
+          noirup
+          nargo --version
+
+      - name: Cache Noir build
+        uses: actions/cache@v4
+        with:
+          path: |
+            circuits/target
+            ~/.nargo
+          key: noir-${{ hashFiles('circuits/Nargo.toml', 'circuits/**/*.nr') }}
+          restore-keys: noir-
+
+      - name: Compile circuits
+        run: nargo compile
+        working-directory: circuits
+
+      - name: Run circuit tests
+        run: nargo test
+        working-directory: circuits
+
+  contracts:
+    name: Contracts (Soroban/Rust)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Install Stellar CLI
+        run: cargo install --locked stellar-cli --features opt
+
+      - name: Cache Cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            contracts/target
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: cargo-${{ hashFiles('contracts/Cargo.toml', 'contracts/**/Cargo.toml') }}
+          restore-keys: cargo-
+
+      - name: Build contracts
+        run: cargo build --target wasm32-unknown-unknown --release
+        working-directory: contracts
+
+      - name: Run contract tests
+        run: cargo test
+        working-directory: contracts
+
+  backend:
+    name: Backend (NestJS)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: nullcarbon_test
+          POSTGRES_USER: nullcarbon
+          POSTGRES_PASSWORD: nullcarbon
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: backend/node_modules
+          key: backend-npm-${{ hashFiles('backend/package-lock.json', 'backend/package.json') }}
+          restore-keys: backend-npm-
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: backend
+
+      - name: Lint
+        run: npm run lint
+        working-directory: backend
+        continue-on-error: true
+
+      - name: Test
+        run: npm test
+        working-directory: backend
+        env:
+          DATABASE_URL: postgres://nullcarbon:nullcarbon@localhost:5432/nullcarbon_test
+
+  frontend:
+    name: Frontend (Angular)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: frontend/node_modules
+          key: frontend-npm-${{ hashFiles('frontend/package-lock.json', 'frontend/package.json') }}
+          restore-keys: frontend-npm-
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: frontend
+
+      - name: Lint
+        run: npm run lint
+        working-directory: frontend
+        continue-on-error: true
+
+      - name: Build
+        run: npx ng build --configuration production
+        working-directory: frontend
