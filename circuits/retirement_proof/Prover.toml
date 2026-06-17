@@ -1,0 +1,23 @@
+# NullCarbon — Retirement Proof Test Inputs
+# For a Verra credit (VCS-111) retired under EU-CORSIA corridor
+#
+# NOTE: credit_hash, merkle_path, merkle root, nullifier, and volume_commitment
+# must be computed via actual Poseidon2 hashing to produce a valid proof.
+# These values are placeholders for template structure.
+
+credit_id = "1"
+credit_secret = "42"
+credit_hash = "0"
+registry_id = "1"
+vintage_year = "2022"
+methodology_code = "1"
+permanence_rating = "91"
+tonne_volume = "3000"
+merkle_path = ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]
+merkle_indices = ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]
+nullifier = "0"
+registry_merkle_root = "0"
+min_vintage_year = "2020"
+min_permanence = "70"
+volume_commitment = "0"
+corridor_id = "1"
