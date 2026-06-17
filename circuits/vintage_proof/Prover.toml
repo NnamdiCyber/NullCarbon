@@ -1,0 +1,19 @@
+# NullCarbon — Vintage Proof Test Inputs
+# CORSIA standard (standard_id=1) with REDD+ methodology (methodology_code=1)
+#
+# NOTE: approved_methodologies_root and merkle_path must be computed via
+# actual Poseidon2 hashing to produce a valid proof.
+# These values are placeholders for template structure.
+
+vintage_year = "2022"
+methodology_code = "1"
+co_benefits_score = "85"
+additionality_rating = "4"
+leakage_factor = "12"
+merkle_path = ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]
+merkle_indices = ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]
+standard_id = "1"
+min_vintage = "2016"
+min_co_benefits = "60"
+max_leakage = "30"
+approved_methodologies_root = "0"
