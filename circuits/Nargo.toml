@@ -1,7 +1,7 @@
-[package]
-name = "nullcarbon-circuits"
-type = "bin"
-authors = ["Nnamdi"]
-compiler_version = ">=0.36"
-
-[dependencies]
+[workspace]
+members = [
+    "retirement_proof",
+    "compliance_proof",
+    "vintage_proof",
+    "utils",
+]
