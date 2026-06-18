@@ -1,24 +1,22 @@
-use dep::std::hash::poseidon2::Poseidon2;
-
-pub fn verify_merkle_inclusion(leaf: Field, path: [Field; 20], indices: [u1; 20]) -> Field {
+pub fn verify_merkle_inclusion(leaf: Field, path: [Field; 20], indices: [bool; 20]) -> Field {
     let mut computed = leaf;
     for i in 0..20 {
         let sibling = path[i];
-        if indices[i] == 0 {
-            computed = Poseidon2::hash([computed, sibling], 2);
+        if indices[i] == false {
+            computed = std::hash::poseidon2::Poseidon2::hash([computed, sibling], 2);
         } else {
-            computed = Poseidon2::hash([sibling, computed], 2);
+            computed = std::hash::poseidon2::Poseidon2::hash([sibling, computed], 2);
         }
     }
     computed
 }
 
 pub fn compute_leaf_hash(credit_id: Field, vintage: u32, volume: u64, methodology: u32) -> Field {
-    Poseidon2::hash([credit_id, vintage as Field, volume as Field, methodology as Field], 4)
+    std::hash::poseidon2::Poseidon2::hash([credit_id, vintage as Field, volume as Field, methodology as Field], 4)
 }
 
 pub fn compute_methodology_leaf(methodology_code: Field, standard_id: Field) -> Field {
-    Poseidon2::hash([methodology_code, standard_id], 2)
+    std::hash::poseidon2::Poseidon2::hash([methodology_code, standard_id], 2)
 }
 
 #[test]
@@ -39,7 +37,7 @@ fn test_methodology_leaf_different() {
 fn test_merkle_inclusion_identity_path() {
     let leaf: Field = 0;
     let path: [Field; 20] = [0; 20];
-    let indices: [u1; 20] = [0; 20];
+    let indices: [bool; 20] = [false; 20];
     let computed_root = verify_merkle_inclusion(leaf, path, indices);
     assert(computed_root != leaf);
 }

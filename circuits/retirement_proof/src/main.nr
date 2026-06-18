@@ -1,6 +1,6 @@
-use dep::utils::merkle;
-use dep::utils::poseidon;
-use dep::utils::range;
+use utils::merkle;
+use utils::poseidon;
+use utils::range;
 
 fn main(
     credit_id: Field,
@@ -11,7 +11,7 @@ fn main(
     permanence_rating: u32,
     tonne_volume: u64,
     merkle_path: [Field; 20],
-    merkle_indices: [u1; 20],
+    merkle_indices: [bool; 20],
     nullifier: Field,
     registry_merkle_root: Field,
     min_vintage_year: u32,
@@ -49,7 +49,7 @@ fn test_happy_path() {
     let credit_hash = merkle::compute_leaf_hash(credit_id, vintage_year, tonne_volume, methodology_code);
 
     let merkle_path: [Field; 20] = [0; 20];
-    let merkle_indices: [u1; 20] = [0; 20];
+    let merkle_indices: [bool; 20] = [false; 20];
     let root = merkle::verify_merkle_inclusion(credit_hash, merkle_path, merkle_indices);
 
     let corridor_id: Field = 1;
@@ -87,7 +87,7 @@ fn test_fails_expired_vintage() {
     let credit_hash = merkle::compute_leaf_hash(credit_id, vintage_year, tonne_volume, methodology_code);
 
     let merkle_path: [Field; 20] = [0; 20];
-    let merkle_indices: [u1; 20] = [0; 20];
+    let merkle_indices: [bool; 20] = [false; 20];
     let root = merkle::verify_merkle_inclusion(credit_hash, merkle_path, merkle_indices);
 
     let corridor_id: Field = 1;
@@ -125,7 +125,7 @@ fn test_fails_invalid_nullifier() {
     let credit_hash = merkle::compute_leaf_hash(credit_id, vintage_year, tonne_volume, methodology_code);
 
     let merkle_path: [Field; 20] = [0; 20];
-    let merkle_indices: [u1; 20] = [0; 20];
+    let merkle_indices: [bool; 20] = [false; 20];
     let root = merkle::verify_merkle_inclusion(credit_hash, merkle_path, merkle_indices);
 
     let volume_commitment = poseidon::compute_volume_commitment(tonne_volume, credit_secret);

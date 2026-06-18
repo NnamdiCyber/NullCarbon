@@ -1,6 +1,6 @@
-use dep::utils::merkle;
-use dep::utils::poseidon;
-use dep::utils::range;
+use utils::merkle;
+use utils::poseidon;
+use utils::range;
 
 fn main(
     retirement_nullifiers: [Field; 50],
@@ -8,7 +8,7 @@ fn main(
     active_count: u32,
     company_secret: Field,
     nullifier_paths: [[Field; 20]; 50],
-    nullifier_indices: [[u1; 20]; 50],
+    nullifier_indices: [[bool; 20]; 50],
     commitment_threshold: u64,
     period_id: Field,
     compliance_nullifier: Field,
@@ -47,7 +47,7 @@ fn test_happy_path_exactly_meets_threshold() {
     let mut retirement_nullifiers: [Field; 50] = [0; 50];
     let mut retirement_volumes: [u64; 50] = [0; 50];
     let mut nullifier_paths: [[Field; 20]; 50] = [[0; 20]; 50];
-    let mut nullifier_indices: [[u1; 20]; 50] = [[0; 20]; 50];
+    let mut nullifier_indices: [[bool; 20]; 50] = [[false; 20]; 50];
 
     let company_secret: Field = 123;
     let period_id: Field = 2025;
@@ -77,7 +77,7 @@ fn test_fails_below_threshold() {
     let mut retirement_nullifiers: [Field; 50] = [0; 50];
     let mut retirement_volumes: [u64; 50] = [0; 50];
     let mut nullifier_paths: [[Field; 20]; 50] = [[0; 20]; 50];
-    let mut nullifier_indices: [[u1; 20]; 50] = [[0; 20]; 50];
+    let mut nullifier_indices: [[bool; 20]; 50] = [[false; 20]; 50];
 
     let company_secret: Field = 123;
     let period_id: Field = 2025;
@@ -107,7 +107,7 @@ fn test_fails_invalid_compliance_nullifier() {
     let mut retirement_nullifiers: [Field; 50] = [0; 50];
     let mut retirement_volumes: [u64; 50] = [0; 50];
     let mut nullifier_paths: [[Field; 20]; 50] = [[0; 20]; 50];
-    let mut nullifier_indices: [[u1; 20]; 50] = [[0; 20]; 50];
+    let mut nullifier_indices: [[bool; 20]; 50] = [[false; 20]; 50];
 
     let company_secret: Field = 123;
     let period_id: Field = 2025;

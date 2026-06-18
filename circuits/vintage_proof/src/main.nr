@@ -1,5 +1,5 @@
-use dep::utils::merkle;
-use dep::utils::range;
+use utils::merkle;
+use utils::range;
 
 fn main(
     vintage_year: u32,
@@ -8,7 +8,7 @@ fn main(
     additionality_rating: u32,
     leakage_factor: u32,
     merkle_path: [Field; 20],
-    merkle_indices: [u1; 20],
+    merkle_indices: [bool; 20],
     standard_id: u32,
     min_vintage: u32,
     min_co_benefits: u32,
@@ -33,7 +33,7 @@ fn test_happy_path_corsia() {
 
     let methodology_leaf = merkle::compute_methodology_leaf(methodology_code as Field, standard_id as Field);
     let path: [Field; 20] = [0; 20];
-    let indices: [u1; 20] = [0; 20];
+    let indices: [bool; 20] = [false; 20];
     let root = merkle::verify_merkle_inclusion(methodology_leaf, path, indices);
 
     main(
@@ -59,7 +59,7 @@ fn test_fails_low_co_benefits() {
 
     let methodology_leaf = merkle::compute_methodology_leaf(methodology_code as Field, standard_id as Field);
     let path: [Field; 20] = [0; 20];
-    let indices: [u1; 20] = [0; 20];
+    let indices: [bool; 20] = [false; 20];
     let root = merkle::verify_merkle_inclusion(methodology_leaf, path, indices);
 
     main(
@@ -85,7 +85,7 @@ fn test_fails_excessive_leakage() {
 
     let methodology_leaf = merkle::compute_methodology_leaf(methodology_code as Field, standard_id as Field);
     let path: [Field; 20] = [0; 20];
-    let indices: [u1; 20] = [0; 20];
+    let indices: [bool; 20] = [false; 20];
     let root = merkle::verify_merkle_inclusion(methodology_leaf, path, indices);
 
     main(
