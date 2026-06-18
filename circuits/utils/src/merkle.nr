@@ -3,20 +3,20 @@ pub fn verify_merkle_inclusion(leaf: Field, path: [Field; 20], indices: [bool; 2
     for i in 0..20 {
         let sibling = path[i];
         if indices[i] == false {
-            computed = std::hash::poseidon2::Poseidon2::hash([computed, sibling], 2);
+            computed = std::hash::pedersen_hash([computed, sibling]);
         } else {
-            computed = std::hash::poseidon2::Poseidon2::hash([sibling, computed], 2);
+            computed = std::hash::pedersen_hash([sibling, computed]);
         }
     }
     computed
 }
 
 pub fn compute_leaf_hash(credit_id: Field, vintage: u32, volume: u64, methodology: u32) -> Field {
-    std::hash::poseidon2::Poseidon2::hash([credit_id, vintage as Field, volume as Field, methodology as Field], 4)
+    std::hash::pedersen_hash([credit_id, vintage as Field, volume as Field, methodology as Field])
 }
 
 pub fn compute_methodology_leaf(methodology_code: Field, standard_id: Field) -> Field {
-    std::hash::poseidon2::Poseidon2::hash([methodology_code, standard_id], 2)
+    std::hash::pedersen_hash([methodology_code, standard_id])
 }
 
 #[test]

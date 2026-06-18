@@ -44,15 +44,14 @@ fn main(
 
 #[test]
 fn test_happy_path_exactly_meets_threshold() {
-    let mut retirement_nullifiers: [Field; 50] = [0; 50];
+    let retirement_nullifiers: [Field; 50] = [0; 50];
     let mut retirement_volumes: [u64; 50] = [0; 50];
-    let mut nullifier_paths: [[Field; 20]; 50] = [[0; 20]; 50];
-    let mut nullifier_indices: [[bool; 20]; 50] = [[false; 20]; 50];
+    let nullifier_paths: [[Field; 20]; 50] = [[0; 20]; 50];
+    let nullifier_indices: [[bool; 20]; 50] = [[false; 20]; 50];
 
     let company_secret: Field = 123;
     let period_id: Field = 2025;
 
-    retirement_nullifiers[0] = 0;
     retirement_volumes[0] = 10000;
     let root = merkle::verify_merkle_inclusion(retirement_nullifiers[0], nullifier_paths[0], nullifier_indices[0]);
 
@@ -74,15 +73,14 @@ fn test_happy_path_exactly_meets_threshold() {
 
 #[test(should_fail)]
 fn test_fails_below_threshold() {
-    let mut retirement_nullifiers: [Field; 50] = [0; 50];
+    let retirement_nullifiers: [Field; 50] = [0; 50];
     let mut retirement_volumes: [u64; 50] = [0; 50];
-    let mut nullifier_paths: [[Field; 20]; 50] = [[0; 20]; 50];
-    let mut nullifier_indices: [[bool; 20]; 50] = [[false; 20]; 50];
+    let nullifier_paths: [[Field; 20]; 50] = [[0; 20]; 50];
+    let nullifier_indices: [[bool; 20]; 50] = [[false; 20]; 50];
 
     let company_secret: Field = 123;
     let period_id: Field = 2025;
 
-    retirement_nullifiers[0] = 0;
     retirement_volumes[0] = 5000;
     let root = merkle::verify_merkle_inclusion(retirement_nullifiers[0], nullifier_paths[0], nullifier_indices[0]);
 
@@ -104,15 +102,14 @@ fn test_fails_below_threshold() {
 
 #[test(should_fail)]
 fn test_fails_invalid_compliance_nullifier() {
-    let mut retirement_nullifiers: [Field; 50] = [0; 50];
+    let retirement_nullifiers: [Field; 50] = [0; 50];
     let mut retirement_volumes: [u64; 50] = [0; 50];
-    let mut nullifier_paths: [[Field; 20]; 50] = [[0; 20]; 50];
-    let mut nullifier_indices: [[bool; 20]; 50] = [[false; 20]; 50];
+    let nullifier_paths: [[Field; 20]; 50] = [[0; 20]; 50];
+    let nullifier_indices: [[bool; 20]; 50] = [[false; 20]; 50];
 
     let company_secret: Field = 123;
     let period_id: Field = 2025;
 
-    retirement_nullifiers[0] = 0;
     retirement_volumes[0] = 10000;
     let root = merkle::verify_merkle_inclusion(retirement_nullifiers[0], nullifier_paths[0], nullifier_indices[0]);
 

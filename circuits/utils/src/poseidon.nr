@@ -1,13 +1,13 @@
 pub fn compute_retirement_nullifier(credit_secret: Field, credit_id: Field, corridor_id: Field) -> Field {
-    std::hash::poseidon2::Poseidon2::hash([credit_secret, credit_id, corridor_id], 3)
+    std::hash::pedersen_hash([credit_secret, credit_id, corridor_id])
 }
 
 pub fn compute_compliance_nullifier(company_secret: Field, period_id: Field) -> Field {
-    std::hash::poseidon2::Poseidon2::hash([company_secret, period_id], 2)
+    std::hash::pedersen_hash([company_secret, period_id])
 }
 
 pub fn compute_volume_commitment(tonne_volume: u64, credit_secret: Field) -> Field {
-    std::hash::poseidon2::Poseidon2::hash([tonne_volume as Field, credit_secret], 2)
+    std::hash::pedersen_hash([tonne_volume as Field, credit_secret])
 }
 
 #[test]
