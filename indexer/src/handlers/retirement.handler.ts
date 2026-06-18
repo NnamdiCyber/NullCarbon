@@ -65,7 +65,7 @@ export class RetirementHandler {
       return [];
     }
 
-    const data = await response.json();
+    const data = await response.json() as { result?: { events?: any[] } };
     const events: RetirementEvent[] = [];
 
     if (data.result?.events) {

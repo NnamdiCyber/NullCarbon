@@ -4,12 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CertificateService, Certificate } from '../../shared/services/certificate.service';
 
-const CORRIDOR_LABELS: Record<string, string> = {
-  '0x' + '01'.repeat(32): 'EU-CORSIA',
-  '0x' + '02'.repeat(32): 'Article 6',
-  '0x' + '03'.repeat(32): 'Voluntary',
-  '0x' + '04'.repeat(32): 'EU Taxonomy',
-};
+function corridorLabel(corridorId: string): string {
+  const map: Record<string, string> = {
+    ['0x' + '01'.repeat(32)]: 'EU-CORSIA',
+    ['0x' + '02'.repeat(32)]: 'Article 6',
+    ['0x' + '03'.repeat(32)]: 'Voluntary',
+    ['0x' + '04'.repeat(32)]: 'EU Taxonomy',
+  };
+  return map[corridorId] ?? corridorId.slice(0, 16) + '...';
+}
 
 @Component({
   selector: 'app-audit-portal',
@@ -310,7 +313,7 @@ export class AuditPortalComponent implements OnInit {
 
   decodeCorridorId(corridorId?: string): string {
     if (!corridorId) return '—';
-    return CORRIDOR_LABELS[corridorId] ?? corridorId.slice(0, 16) + '...';
+    return corridorLabel(corridorId);
   }
 
   truncate(val?: string): string {

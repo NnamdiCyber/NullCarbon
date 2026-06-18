@@ -12,6 +12,10 @@ export interface Credit {
   permanenceRating: number;
   creditHash: string;
   isRetired: boolean;
+  methodologyCode?: number;
+  merklePath?: string[];
+  merkleIndices?: number[];
+  merkleRoot?: string;
 }
 
 export interface CreditFilters {

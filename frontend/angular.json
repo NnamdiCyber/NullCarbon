@@ -28,8 +28,9 @@
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
+            "externalDependencies": ["@aztec/bb.js"],
             "assets": [
-              { "glob": "**/*", "input": "public" },
+              { "glob": "**/*", "input": "public", "output": "/" },
               { "glob": "**/*.json", "input": "src/assets/circuits", "output": "/assets/circuits" }
             ],
             "styles": ["src/styles.css"],
@@ -40,7 +41,12 @@
               "budgets": [
                 { "type": "initial", "maximumWarning": "500kb", "maximumError": "1mb" }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": {
+                "scripts": true,
+                "styles": true,
+                "fonts": { "inline": false }
+              }
             },
             "development": {
               "optimization": false,
