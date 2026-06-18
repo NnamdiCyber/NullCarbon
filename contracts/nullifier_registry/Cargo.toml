@@ -4,14 +4,13 @@ version = "0.1.0"
 edition = "2021"
 
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-soroban-sdk = { version = "21", features = ["contract"] }
+soroban-sdk = { version = "21" }
 
-[profile.release]
-opt-level = "z"
-overflow-checks = true
-lto = true
-debug = 0
-strip = "symbols"
+[dev-dependencies]
+soroban-sdk = { version = "21", features = ["testutils"] }
+
+[features]
+testutils = ["soroban-sdk/testutils"]

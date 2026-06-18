@@ -4,14 +4,14 @@ version = "0.1.0"
 edition = "2021"
 
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-soroban-sdk = { version = "21", features = ["contract"] }
+soroban-sdk = { version = "21" }
+nullifier_registry = { path = "../nullifier_registry" }
+credit_registry = { path = "../credit_registry" }
 
-[profile.release]
-opt-level = "z"
-overflow-checks = true
-lto = true
-debug = 0
-strip = "symbols"
+[dev-dependencies]
+soroban-sdk = { version = "21", features = ["testutils"] }
+nullifier_registry = { path = "../nullifier_registry", features = ["testutils"] }
+credit_registry = { path = "../credit_registry", features = ["testutils"] }
