@@ -1252,25 +1252,7 @@ The Merkle root is updated periodically (e.g. daily) as new credits are issued a
 
 ## Contributing
 
-Contributions are welcome. Please open an issue to discuss significant changes before submitting a pull request.
-
-```bash
-# Development setup
-git clone https://github.com/your-org/nullcarbon.git
-cd nullcarbon
-./scripts/setup.sh
-
-# Run tests
-cd circuits && nargo test && cd ..
-cd contracts && cargo test && cd ..
-cd backend && npm test && cd ..
-cd frontend && ng test && cd ..
-
-# Full e2e
-./scripts/test-e2e.sh
-```
-
-Code style: `rustfmt` for Rust, Prettier + ESLint for TypeScript.
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines — including setup, coding standards, testing, pull request process, and commit conventions.
 
 ---
 
